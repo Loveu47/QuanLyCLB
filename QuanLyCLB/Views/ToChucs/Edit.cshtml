@@ -1,0 +1,74 @@
+﻿@model QuanLyCLB.Models.ToChuc
+
+@{
+    ViewBag.Title = "Chỉnh sửa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container mt-xl-50 mt-sm-30 mt-15">
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></span></span>Quản lý tổ chức</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+                <h5 class="hk-sec-title">Chỉnh sủa tổ chức</h5>
+                @using (Html.BeginForm("Edit", "ToChucs", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+
+                        <div class="form-group">
+                            <label for="ten">Tên tổ chức</label>
+                            <input type="text" class="form-control" name="Ten" id="ten" value="@Model.Ten">
+                        </div>
+                        <div class="form-group">
+                            <label for="mota">Mô tả</label>
+                            <input type="text" class="form-control" name="MoTa" id="mota" value="@Model.MoTa">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Logo">Logo<small>(Logo sẽ được giữ nguyên nếu không up ảnh mới)</small></label><br />
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                                <div class="form-control text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                <span class="input-group-append">
+                                    <span class=" btn btn-primary btn-file">
+                                        <span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span>
+                                        <input type="hidden"><input type="file" id="Logo" name="Logo" value="@Model.Logo">
+                                    </span>
+                                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ngaythanhlap">Ngày thành lập<small>(mm/dd/yyyy)</small></label>
+                            <input type="text" class="form-control" name="NgayThanhLap" id="ngaythanhlap" value="@Model.NgayThanhLap.ToShortDateString()">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                <a href="@Url.Action("Index","ToChucs")" class="btn btn-light">Trở về</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Content/vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+    <script src="~/Content/dist/js/jquery.slimscroll.js"></script>
+}

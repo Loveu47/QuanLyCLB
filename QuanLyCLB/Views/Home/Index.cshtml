@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+}
+
+<div class="container mt-xl-50 mt-sm-30 mt-15">
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <div>
+            <h2 class="hk-pg-title font-weight-600">Trang chủ</h2>
+        </div>
+    </div>
+    <!-- /Title -->
+    <!-- Row -->
+    <div class="hk-row">
+        <div class="col-lg-3 col-sm-6  ">
+            <div class="card card-sm ">
+                <a href="@Url.Action("Index","ToChucs")">
+                    <div class="card-body bg-gradient-primary border rounded-5">
+                        <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Số tổ chức</span>
+                        <div class="d-flex align-items-center justify-content-between position-relative">
+                            <div>
+                                <span class="d-block display-5 font-weight-400 text-white">@TempData["TongSo"]</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card card-sm">
+                <div class="card-body bg-gradient-success border rounded-5">
+                    <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Số thành viên</span>
+                    <div class="d-flex align-items-center justify-content-between position-relative">
+                        <div>
+                            <span class="d-block display-5 font-weight-400 text-white">@TempData["ThanhVien"]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card card-sm">
+                <a href="@Url.Action("Index","HoatDong")">
+                    <div class="card-body bg-gradient-space border rounded-5">
+                        <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Số hoạt động</span>
+                        <div class="d-flex align-items-center justify-content-between position-relative">
+                            <div>
+                                <span class="d-block display-5 font-weight-400 text-white">@TempData["HoatDong"]</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card card-sm">
+                <div class="card-body bg-gradient-heaven border rounded-5">
+                    <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Cán bộ quản lý</span>
+                    <div class="d-flex align-items-center justify-content-between position-relative">
+                        <div>
+                            <span class="d-block display-5 font-weight-400 text-white">@TempData["CanBo"]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Row -->
+</div>

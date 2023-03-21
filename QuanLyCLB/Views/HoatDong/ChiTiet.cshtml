@@ -1,0 +1,47 @@
+﻿@model QuanLyCLB.Models.HoatDong
+@{
+    ViewBag.Title = "Chi tiết hoạt động";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-xl-50 mt-sm-30 mt-15">
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <div>
+            <h2 class="hk-pg-title font-weight-600">Chi tiết hoạt động</h2>
+        </div>
+    </div>
+
+    <div class="card card-profile-feed">
+        <div class="card-header card-header-action">
+            <div class="media align-items-center">
+                <div class="media-img-wrap d-flex mr-10">
+                    <div class="avatar avatar-sm">
+                        @if (Model.ToChuc.Logo != null)
+                        {
+                            <img src="@Model.ToChuc.Logo" alt="user" class="avatar-img rounded-circle">
+                        }
+                        else
+                        {
+                            <img src="~/Content/upload/logoVinh.jpg" alt="user" class="avatar-img rounded-circle">
+                        }
+                    </div>
+                </div>
+                <div class="media-body">
+                    <div class="text-capitalize font-weight-500 text-dark">@Model.ToChuc.Ten</div>
+                    <div class="font-13">@Model.ThoiGian</div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text mb-30">@Html.Raw(Model.NoiDung)</p>
+        </div>
+        <div class="card-footer justify-content-between">
+            <div>
+                <a href="@Url.Action("Index","HoatDong")">Trở về</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+

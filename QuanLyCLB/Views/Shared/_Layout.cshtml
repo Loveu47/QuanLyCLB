@@ -1,0 +1,180 @@
+﻿
+@{ 
+    var acc = Session["Login"] as QuanLyCLB.Models.TaiKhoan;
+}
+
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Content/favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Morris Charts CSS -->
+    <link href="~/Content/vendors/morris.js/morris.css" rel="stylesheet" type="text/css" />
+
+    <!-- Toggles CSS -->
+    <link href="~/Content/vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+
+    <!-- Toastr CSS -->
+    <link href="~/Content/vendors/jquery-toast-plugin/dist/jquery.toast.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="~/Content/dist/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>
+    <!-- /Preloader -->
+    <!-- HK Wrapper -->
+    <div class="hk-wrapper hk-horizontal-nav">
+
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar">
+            <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span class="feather-icon"><i data-feather="menu"></i></span></a>
+            <a class="navbar-brand" href="@Url.Action("Index","Home")">
+                Quản lý CLB, đội, nhóm
+            </a>
+            <ul class="navbar-nav hk-navbar-content">
+                <li class="nav-item dropdown dropdown-authentication">
+                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar">
+                                    <img src="~/Content/dist/img/avatar12.jpg" alt="user" class="avatar-img rounded-circle">
+                                </div>
+                                <span class="badge badge-success badge-indicator"></span>
+                            </div>
+                            <div class="media-body">
+                                <span>@acc.HoTen<i class="zmdi zmdi-chevron-down"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
+                        <a class="dropdown-item" href="profile.html"><i class="dropdown-icon zmdi zmdi-account"></i><span>Trang cá nhân</span></a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout","Auth")"><i class="dropdown-icon zmdi zmdi-power"></i><span>Đăng xuất</span></a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /Top Navbar -->
+        <!--Horizontal Nav-->
+        <nav class="hk-nav hk-nav-dark">
+            <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i data-feather="x"></i></span></a>
+            <div class="nicescroll-bar">
+                <div class="navbar-nav-wrap">
+                    <ul class="navbar-nav flex-row">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index","Home")">
+                                <span class="feather-icon"><i data-feather="activity"></i></span>
+                                <span class="nav-link-text">Trang chủ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index","ToChucs")">
+                                <span class="feather-icon"><i data-feather="book"></i></span>
+                                <span class="nav-link-text">Quản lý tổ chức</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-with-badge" href="@Url.Action("Index","HoatDong")" >
+                                <span class="feather-icon"><i data-feather="eye"></i></span>
+                                <span class="nav-link-text">Hoạt động</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-with-badge" href="https://hencework.gitbook.io/pangong/changelog" target="_blank">
+                                <span class="feather-icon"><i data-feather="eye"></i></span>
+                                <span class="nav-link-text">Quản lý tài khoản</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="hk_nav_backdrop" class="hk-nav-backdrop"></div>
+        <!--/Horizontal Nav-->
+        <!-- Main Content -->
+        <div class="hk-pg-wrapper">
+            <!-- Container -->
+            @if (TempData["ThongBao"] != null)
+            {
+                <div id="thongbao" class="alert alert-inv @TempData["Type"] hide">
+                    @TempData["ThongBao"]
+                </div>
+            }
+            @RenderBody()
+            <!-- /Container -->
+            <!-- Footer -->
+            <div class="hk-footer-wrap container">
+                <footer class="footer">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <p>Pampered by<a href="https://hencework.com/" class="text-dark" target="_blank">Hencework</a> © 2019</p>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- /Footer -->
+        </div>
+        <!-- /Main Content -->
+
+    </div>
+    <!-- /HK Wrapper -->
+    <!-- jQuery -->
+    <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Content/vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Slimscroll JavaScript -->
+    <script src="~/Content/dist/js/jquery.slimscroll.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="~/Content/dist/js/dropdown-bootstrap-extended.js"></script>
+
+    <!-- FeatherIcons JavaScript -->
+    <script src="~/Content/dist/js/feather.min.js"></script>
+
+    <!-- Toggles JavaScript -->
+    <script src="~/Content/vendors/jquery-toggles/toggles.min.js"></script>
+    <script src="~/Content/dist/js/toggle-data.js"></script>
+
+    <!-- Toastr JS -->
+    <script src="~/Content/vendors/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+
+    <!-- Counter Animation JavaScript -->
+    <script src="~/Content/vendors/waypoints/lib/jquery.waypoints.min.js"></script>
+    <script src="~/Content/vendors/jquery.counterup/jquery.counterup.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="~/Content/vendors/raphael/raphael.min.js"></script>
+    <script src="~/Content/vendors/morris.js/morris.min.js"></script>
+
+    <!-- Easy pie chart JS -->
+    <script src="~/Content/vendors/easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+
+    <!-- EChartJS JavaScript -->
+    <script src="~/Content/vendors/echarts/dist/echarts-en.min.js"></script>
+
+    <!-- Init JavaScript -->
+    <script src="~/Content/dist/js/init.js"></script>
+    <script src="~/Content/dist/js/dashboard2-data.js"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

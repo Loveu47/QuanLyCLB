@@ -1,0 +1,198 @@
+﻿@model IEnumerable<QuanLyCLB.Models.ToChuc>
+
+@{
+    ViewBag.Title = "Quản lý tổ chức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = 1;
+}
+
+<div class="container mt-xl-50 mt-sm-30 mt-15">
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></span></span>Quản lý tổ chức</h4>
+        </div>
+    </div>
+    <!-- /Title -->
+    <!-- Row -->
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+                <h5 class="hk-sec-title">Toàn bộ tổ chức đang được quản lý</h5>
+                <button type="button" class="btn btn-outline-primary btn-rounded mb-10" data-toggle="modal" data-target="#exampleModalForms">
+                    Thêm mới
+                </button>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="table-wrap">
+                            <table id="datable_1" class="table table-hover w-100 display pb-30">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            STT
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Ten)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MoTa)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Logo)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.NgayThanhLap)
+                                        </th>
+                                        <th>
+                                            Chức năng
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Ten)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MoTa)
+                                            </td>
+                                            <td>
+                                                @if (item.Logo != null)
+                                                {
+                                                    <img src="@Url.Content(item.Logo)" width="64px" height="64px" alt="Ảnh" />
+
+                                                }
+                                                else
+                                                {<span>NULL</span>}
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgayThanhLap)
+                                            </td>
+                                            <td>
+                                                @if (item.NgayGiaiThe == null)
+                                                {
+                                                    <a href="@Url.Action("Edit", "ToChucs", new { id = item.Id })" class="btn btn-icon btn-icon-circle btn-secondary btn-icon-style-3"><span class="btn-icon-wrap"><i class="fa fa-pencil"></i></span></a>
+                                                    <button class="btn btn-icon btn-icon-circle btn-info btn-icon-style-3" onclick="@{ViewData["id"] = item.Id; } " data-toggle="modal" data-target="#exampleModal"><span class="btn-icon-wrap"><i class="icon-trash"></i></span></button>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-danger badge-outline">Đã giải thể<br />@Html.DisplayFor(modelItem => item.NgayGiaiThe)</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>
+                                            STT
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Ten)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MoTa)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Logo)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.NgayThanhLap)
+                                        </th>
+                                        <th>
+                                            Chức năng
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+
+<div class="modal fade" id="exampleModalForms" tabindex="-1" role="dialog" aria-labelledby="exampleModalForms" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm mới tổ chức</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "ToChucs", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="ten">Tên tổ chức</label>
+                        <input type="text" class="form-control" name="Ten" id="ten" required placeholder="Nhập tên tổ chức...">
+                    </div>
+                    <div class="form-group">
+                        <label for="mota">Mô tả</label>
+                        <input type="text" class="form-control" name="MoTa" id="mota" placeholder="Mô tả tổ chức">
+                    </div>
+                    <div class="form-group">
+                        <label for="ngaythanhlap">Ngày thành lập</label>
+                        <input type="date" class="form-control" name="NgayThanhLap" id="ngaythanhlap" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ngaygiaithe">Ngày giải thể</label>
+                        <input type="date" class="form-control" id="ngaygiaithe" name="NgayGiaiThe">
+                    </div>
+                    <div class="form-group">
+                        <label for="Logo">Logo</label><br />
+                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="form-control text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                            <span class="input-group-append">
+                                <span class=" btn btn-primary btn-file">
+                                    <span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span>
+                                    <input type="hidden"><input type="file" id="Logo" name="Logo">
+                                </span>
+                                <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
+                            </span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Giải thể</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn giải thể tổ chức này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <a href="@Url.Action("Delete","ToChucs", new {id = ViewData["id"] })" class="btn btn-primary">Xác nhận</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/dist/js/dataTables-data.js"></script>
+    <script src="~/Content/vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+    <script src="~/Content/dist/js/jquery.slimscroll.js"></script>
+
+}

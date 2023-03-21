@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QuanLyCLBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ban">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenBan" Type="nvarchar" MaxLength="50" />
+          <Property Name="MoTa" Type="nvarchar" MaxLength="500" />
+          <Property Name="ToChucId" Type="int" />
+        </EntityType>
+        <EntityType Name="HoatDong">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ToChucId" Type="int" />
+          <Property Name="TieuDe" Type="nvarchar" MaxLength="200" />
+          <Property Name="NoiDung" Type="nvarchar(max)" />
+          <Property Name="ThoiGian" Type="date" />
+          <Property Name="AnhChinh" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ToChucId" Type="int" />
+          <Property Name="TaiKhoan" Type="nvarchar" MaxLength="50" />
+          <Property Name="MatKhau" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="50" />
+          <Property Name="ChucVu" Type="nvarchar" MaxLength="50" />
+          <Property Name="SDT" Type="nchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="QLCapCao" Type="bit" />
+        </EntityType>
+        <EntityType Name="ThanhVien">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="50" />
+          <Property Name="MSSV" Type="nvarchar" MaxLength="20" />
+          <Property Name="SDT" Type="nchar" MaxLength="15" />
+          <Property Name="NganhHoc" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgaySinh" Type="date" />
+          <Property Name="ToChucId" Type="int" />
+          <Property Name="BanId" Type="int" />
+          <Property Name="ChucVu" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ToChuc">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ten" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="MoTa" Type="nvarchar" MaxLength="200" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgayThanhLap" Type="date" Nullable="false" />
+          <Property Name="NgayGiaiThe" Type="date" />
+        </EntityType>
+        <Association Name="FK_Ban_ToChuc">
+          <End Role="ToChuc" Type="Self.ToChuc" Multiplicity="0..1" />
+          <End Role="Ban" Type="Self.Ban" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToChuc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ban">
+              <PropertyRef Name="ToChucId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HoatDong_ToChuc">
+          <End Role="ToChuc" Type="Self.ToChuc" Multiplicity="0..1" />
+          <End Role="HoatDong" Type="Self.HoatDong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToChuc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HoatDong">
+              <PropertyRef Name="ToChucId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiKhoan_ToChuc">
+          <End Role="ToChuc" Type="Self.ToChuc" Multiplicity="0..1" />
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToChuc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaiKhoan">
+              <PropertyRef Name="ToChucId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThanhVien_Ban">
+          <End Role="Ban" Type="Self.Ban" Multiplicity="0..1" />
+          <End Role="ThanhVien" Type="Self.ThanhVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ban">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ThanhVien">
+              <PropertyRef Name="BanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThanhVien_ToChuc">
+          <End Role="ToChuc" Type="Self.ToChuc" Multiplicity="0..1" />
+          <End Role="ThanhVien" Type="Self.ThanhVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToChuc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ThanhVien">
+              <PropertyRef Name="ToChucId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLyCLBModelStoreContainer">
+          <EntitySet Name="Ban" EntityType="Self.Ban" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HoatDong" EntityType="Self.HoatDong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThanhVien" EntityType="Self.ThanhVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ToChuc" EntityType="Self.ToChuc" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Ban_ToChuc" Association="Self.FK_Ban_ToChuc">
+            <End Role="ToChuc" EntitySet="ToChuc" />
+            <End Role="Ban" EntitySet="Ban" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoatDong_ToChuc" Association="Self.FK_HoatDong_ToChuc">
+            <End Role="ToChuc" EntitySet="ToChuc" />
+            <End Role="HoatDong" EntitySet="HoatDong" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoan_ToChuc" Association="Self.FK_TaiKhoan_ToChuc">
+            <End Role="ToChuc" EntitySet="ToChuc" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThanhVien_Ban" Association="Self.FK_ThanhVien_Ban">
+            <End Role="Ban" EntitySet="Ban" />
+            <End Role="ThanhVien" EntitySet="ThanhVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThanhVien_ToChuc" Association="Self.FK_ThanhVien_ToChuc">
+            <End Role="ToChuc" EntitySet="ToChuc" />
+            <End Role="ThanhVien" EntitySet="ThanhVien" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuanLyCLBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ban">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenBan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ToChucId" Type="Int32" />
+          <NavigationProperty Name="ToChuc" Relationship="Self.FK_Ban_ToChuc" FromRole="Ban" ToRole="ToChuc" />
+          <NavigationProperty Name="ThanhViens" Relationship="Self.FK_ThanhVien_Ban" FromRole="Ban" ToRole="ThanhVien" />
+        </EntityType>
+        <EntityType Name="HoatDong">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToChucId" Type="Int32" />
+          <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ThoiGian" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ToChuc" Relationship="Self.FK_HoatDong_ToChuc" FromRole="HoatDong" ToRole="ToChuc" />
+          <Property Name="TieuDe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AnhChinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToChucId" Type="Int32" />
+          <Property Name="TaiKhoan1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MatKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChucVu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QLCapCao" Type="Boolean" />
+          <NavigationProperty Name="ToChuc" Relationship="Self.FK_TaiKhoan_ToChuc" FromRole="TaiKhoan" ToRole="ToChuc" />
+        </EntityType>
+        <EntityType Name="ThanhVien">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MSSV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="NganhHoc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+          <Property Name="ToChucId" Type="Int32" />
+          <Property Name="BanId" Type="Int32" />
+          <Property Name="ChucVu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ban" Relationship="Self.FK_ThanhVien_Ban" FromRole="ThanhVien" ToRole="Ban" />
+          <NavigationProperty Name="ToChuc" Relationship="Self.FK_ThanhVien_ToChuc" FromRole="ThanhVien" ToRole="ToChuc" />
+        </EntityType>
+        <EntityType Name="ToChuc">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ten" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MoTa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgayThanhLap" Type="DateTime" Precision="0" Nullable="false" />
+          <NavigationProperty Name="Bans" Relationship="Self.FK_Ban_ToChuc" FromRole="ToChuc" ToRole="Ban" />
+          <NavigationProperty Name="HoatDongs" Relationship="Self.FK_HoatDong_ToChuc" FromRole="ToChuc" ToRole="HoatDong" />
+          <NavigationProperty Name="TaiKhoans" Relationship="Self.FK_TaiKhoan_ToChuc" FromRole="ToChuc" ToRole="TaiKhoan" />
+          <NavigationProperty Name="ThanhViens" Relationship="Self.FK_ThanhVien_ToChuc" FromRole="ToChuc" ToRole="ThanhVien" />
+          <Property Name="NgayGiaiThe" Type="DateTime" Precision="0" />
+        </EntityType>
+        <Association Name="FK_Ban_ToChuc">
+          <End Role="ToChuc" Type="Self.ToChuc" Multiplicity="0..1" />
+          <End Role="Ban" Type="Self.Ban" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToChuc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ban">
+              <PropertyRef Name="ToChucId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThanhVien_Ban">
+          <End Role="Ban" Type="Self.Ban" Multiplicity="0..1" />
+          <End Role="ThanhVien" Type="Self.ThanhVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ban">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ThanhVien">
+              <PropertyRef Name="BanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HoatDong_ToChuc">
+          <End Role="ToChuc" Type="Self.ToChuc" Multiplicity="0..1" />
+          <End Role="HoatDong" Type="Self.HoatDong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToChuc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HoatDong">
+              <PropertyRef Name="ToChucId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiKhoan_ToChuc">
+          <End Role="ToChuc" Type="Self.ToChuc" Multiplicity="0..1" />
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToChuc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaiKhoan">
+              <PropertyRef Name="ToChucId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThanhVien_ToChuc">
+          <End Role="ToChuc" Type="Self.ToChuc" Multiplicity="0..1" />
+          <End Role="ThanhVien" Type="Self.ThanhVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToChuc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ThanhVien">
+              <PropertyRef Name="ToChucId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLyCLBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bans" EntityType="Self.Ban" />
+          <EntitySet Name="HoatDongs" EntityType="Self.HoatDong" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
+          <EntitySet Name="ThanhViens" EntityType="Self.ThanhVien" />
+          <EntitySet Name="ToChucs" EntityType="Self.ToChuc" />
+          <AssociationSet Name="FK_Ban_ToChuc" Association="Self.FK_Ban_ToChuc">
+            <End Role="ToChuc" EntitySet="ToChucs" />
+            <End Role="Ban" EntitySet="Bans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThanhVien_Ban" Association="Self.FK_ThanhVien_Ban">
+            <End Role="Ban" EntitySet="Bans" />
+            <End Role="ThanhVien" EntitySet="ThanhViens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoatDong_ToChuc" Association="Self.FK_HoatDong_ToChuc">
+            <End Role="ToChuc" EntitySet="ToChucs" />
+            <End Role="HoatDong" EntitySet="HoatDongs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoan_ToChuc" Association="Self.FK_TaiKhoan_ToChuc">
+            <End Role="ToChuc" EntitySet="ToChucs" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThanhVien_ToChuc" Association="Self.FK_ThanhVien_ToChuc">
+            <End Role="ToChuc" EntitySet="ToChucs" />
+            <End Role="ThanhVien" EntitySet="ThanhViens" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuanLyCLBModelStoreContainer" CdmEntityContainer="QuanLyCLBEntities">
+          <EntitySetMapping Name="Bans">
+            <EntityTypeMapping TypeName="QuanLyCLBModel.Ban">
+              <MappingFragment StoreEntitySet="Ban">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TenBan" ColumnName="TenBan" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+                <ScalarProperty Name="ToChucId" ColumnName="ToChucId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoatDongs">
+            <EntityTypeMapping TypeName="QuanLyCLBModel.HoatDong">
+              <MappingFragment StoreEntitySet="HoatDong">
+                <ScalarProperty Name="AnhChinh" ColumnName="AnhChinh" />
+                <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ToChucId" ColumnName="ToChucId" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="ThoiGian" ColumnName="ThoiGian" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QuanLyCLBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiKhoans">
+            <EntityTypeMapping TypeName="QuanLyCLBModel.TaiKhoan">
+              <MappingFragment StoreEntitySet="TaiKhoan">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ToChucId" ColumnName="ToChucId" />
+                <ScalarProperty Name="TaiKhoan1" ColumnName="TaiKhoan" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="ChucVu" ColumnName="ChucVu" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="QLCapCao" ColumnName="QLCapCao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThanhViens">
+            <EntityTypeMapping TypeName="QuanLyCLBModel.ThanhVien">
+              <MappingFragment StoreEntitySet="ThanhVien">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="MSSV" ColumnName="MSSV" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="NganhHoc" ColumnName="NganhHoc" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="ToChucId" ColumnName="ToChucId" />
+                <ScalarProperty Name="BanId" ColumnName="BanId" />
+                <ScalarProperty Name="ChucVu" ColumnName="ChucVu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ToChucs">
+            <EntityTypeMapping TypeName="QuanLyCLBModel.ToChuc">
+              <MappingFragment StoreEntitySet="ToChuc">
+                <ScalarProperty Name="NgayGiaiThe" ColumnName="NgayGiaiThe" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ten" ColumnName="Ten" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="NgayThanhLap" ColumnName="NgayThanhLap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
