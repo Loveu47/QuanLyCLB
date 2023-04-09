@@ -1,0 +1,231 @@
+﻿@model IEnumerable<QuanLyCLB.Models.TaiKhoan>
+
+@{
+    ViewBag.Title = "Quản lý tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = 1;
+}
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+}
+
+<div class="container mt-xl-50 mt-sm-30 mt-15">
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></span></span>Quản lý tài khoản</h4>
+        </div>
+
+    </div>
+    <!-- /Title -->
+    <!-- Row -->
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+                <h5 class="hk-sec-title">Toàn bộ tài khoản đang được quản lý</h5>
+                <button type="button" class="btn btn-outline-primary btn-rounded mb-10" data-toggle="modal" data-target="#exampleModalForms">
+                    Thêm mới
+                </button>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="table-wrap">
+                            <table id="datable_1" class="table table-hover w-100 display pb-30">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            STT
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ChucVu)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ToChuc.Ten)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.HoTen)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.TaiKhoan1)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.QLCapCao)
+                                        </th>
+                                        <th>
+                                            Chức năng
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @i
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ChucVu)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ToChuc.Ten)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HoTen)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TaiKhoan1)
+                                            </td>
+                                            <td>
+                                                @if (item.QLCapCao == true)
+                                                {
+                                                    <a href="" data-id="@item.Id" class="btn-custom btn btn-outline-success rounded-pill"><i class="fas fa-check"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="" data-id="@item.Id" class="btn-custom btn btn-outline-danger rounded-pill"><i class="far fa-times-circle"></i></a>
+                                                }
+                                            </td>
+                                            <td>
+                                                <button title="Xoá" class="btn btn-icon btn-icon-circle btn-info btn-icon-style-3" onclick="@{ViewData["id"] = item.Id; } " data-toggle="modal" data-target="#exampleModal"><span class="btn-icon-wrap"><i class="icon-trash"></i></span></button>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>
+                                            STT
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ToChuc.Ten)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ChucVu)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.HoTen)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.TaiKhoan1)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.QLCapCao)
+                                        </th>
+                                        <th>
+                                            Chức năng
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<div class="modal fade" id="exampleModalForms" tabindex="-1" role="dialog" aria-labelledby="exampleModalForms" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm mới tài khoản</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "TaiKhoans", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="ten">Họ và tên</label>
+                        <input type="text" class="form-control" name="HoTen" id="ten" required placeholder="Nhập họ và tên...">
+                    </div>
+                    <div class="form-group">
+                        <label for="tk">Tài khoản</label>
+                        <input type="text" class="form-control" name="TaiKhoan1" id="tk" required placeholder="Nhập tên tài khoản...">
+                    </div>
+                    <div class="form-group">
+                        <label for="mk">Mật khẩu</label>
+                        <input type="password" class="form-control" required name="MatKhau" id="mk">
+                    </div>
+                    <div class="form-group">
+                        <label for="cv">Chức vụ</label>
+                        <input type="text" class="form-control" name="ChucVu" id="cv">
+                    </div>
+                    <div class="form-group">
+                        <label for="ToChucId">Tổ chức</label>
+                        @Html.DropDownList("ToChucId", null, "Không", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="sdt">Số điện thoại</label>
+                        <input type="number" class="form-control" id="sdt" name="SDT">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" required id="email" name="Email">
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox checkbox-primary">
+                            <input type="checkbox" class="custom-control-input" id="customCheck4" name="QLCapCao" value="True">
+                            <label class="custom-control-label" for="customCheck4">Quản lý cấp cao</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xoá tài khoản</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xoá tài khoản này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <a href="@Url.Action("Delete","TaiKhoans", new {id = ViewData["id"] })" class="btn btn-primary">Xác nhận</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/dist/js/dataTables-data.js"></script>
+    <script src="~/Content/vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+    <script src="~/Content/dist/js/jquery.slimscroll.js"></script>
+    <script src="~/Content/vendors/jquery-toggles/toggles.min.js"></script>
+    <script src="~/Content/dist/js/toggle-data.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".btn-custom").off('click').on('click', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "/TaiKhoans/SuaQuyen",
+                    data: { id: id },
+                    type: "POST",
+                    success: function (data) {
+                        if (data.status) {
+                            window.location.reload();
+                        }
+                        else {
+                            window.location.reload();
+                        }
+                    }
+                });
+            })
+
+        })
+    </script>
+}

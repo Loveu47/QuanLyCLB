@@ -437,5 +437,5 @@ echartsConfig();
 /*****Function Call end*****/
 $(function () {
 	$('#thongbao').removeClass('hide');
-	$('#thongbao').delay(2000).slideUp(750);
+	$('#thongbao').delay(5000).slideUp(1000);
 });

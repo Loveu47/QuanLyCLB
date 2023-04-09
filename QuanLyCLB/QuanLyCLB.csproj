@@ -132,9 +132,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\BansController.cs" />
     <Compile Include="Controllers\HoatDongController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParentsController.cs" />
+    <Compile Include="Controllers\TaiKhoansController.cs" />
+    <Compile Include="Controllers\ThanhViensController.cs" />
     <Compile Include="Controllers\ToChucsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1532,6 +1535,19 @@
     <Content Include="Views\ToChucs\Index.cshtml" />
     <Content Include="Views\HoatDong\Index.cshtml" />
     <Content Include="Views\HoatDong\ChiTiet.cshtml" />
+    <Content Include="Views\TaiKhoans\Create.cshtml" />
+    <Content Include="Views\TaiKhoans\Edit.cshtml" />
+    <Content Include="Views\TaiKhoans\Index.cshtml" />
+    <Content Include="Views\ThanhViens\Create.cshtml" />
+    <Content Include="Views\ThanhViens\Delete.cshtml" />
+    <Content Include="Views\ThanhViens\Details.cshtml" />
+    <Content Include="Views\ThanhViens\Edit.cshtml" />
+    <Content Include="Views\ThanhViens\Index.cshtml" />
+    <Content Include="Views\Bans\Create.cshtml" />
+    <Content Include="Views\Bans\Delete.cshtml" />
+    <Content Include="Views\Bans\Details.cshtml" />
+    <Content Include="Views\Bans\Edit.cshtml" />
+    <Content Include="Views\Bans\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

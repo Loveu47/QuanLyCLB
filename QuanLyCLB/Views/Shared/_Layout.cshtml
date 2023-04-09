@@ -1,5 +1,5 @@
 ﻿
-@{ 
+@{
     var acc = Session["Login"] as QuanLyCLB.Models.TaiKhoan;
 }
 
@@ -29,6 +29,7 @@
 
     <!-- Custom CSS -->
     <link href="~/Content/dist/css/style.css" rel="stylesheet" type="text/css">
+    @RenderSection("css", required: false)
 </head>
 
 <body>
@@ -75,32 +76,64 @@
             <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i data-feather="x"></i></span></a>
             <div class="nicescroll-bar">
                 <div class="navbar-nav-wrap">
-                    <ul class="navbar-nav flex-row">
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index","Home")">
-                                <span class="feather-icon"><i data-feather="activity"></i></span>
-                                <span class="nav-link-text">Trang chủ</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index","ToChucs")">
-                                <span class="feather-icon"><i data-feather="book"></i></span>
-                                <span class="nav-link-text">Quản lý tổ chức</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link link-with-badge" href="@Url.Action("Index","HoatDong")" >
-                                <span class="feather-icon"><i data-feather="eye"></i></span>
-                                <span class="nav-link-text">Hoạt động</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link link-with-badge" href="https://hencework.gitbook.io/pangong/changelog" target="_blank">
-                                <span class="feather-icon"><i data-feather="eye"></i></span>
-                                <span class="nav-link-text">Quản lý tài khoản</span>
-                            </a>
-                        </li>
-                    </ul>
+                    @if (acc.QLCapCao == true)
+                    {
+                        <ul class="navbar-nav flex-row">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index","Home")">
+                                    <span class="feather-icon"><i data-feather="activity"></i></span>
+                                    <span class="nav-link-text">Trang chủ</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index","ToChucs")">
+                                    <span class="feather-icon"><i data-feather="book"></i></span>
+                                    <span class="nav-link-text">Quản lý tổ chức</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-with-badge" href="@Url.Action("Index","HoatDong")">
+                                    <span class="feather-icon"><i data-feather="eye"></i></span>
+                                    <span class="nav-link-text">Hoạt động</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-with-badge" href="@Url.Action("Index","TaiKhoans")">
+                                    <span class="feather-icon"><i data-feather="user"></i></span>
+                                    <span class="nav-link-text">Quản lý tài khoản</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav flex-row">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index","Home")">
+                                    <span class="feather-icon"><i data-feather="activity"></i></span>
+                                    <span class="nav-link-text">Trang chủ</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index","ThanhViens")">
+                                    <span class="feather-icon"><i data-feather="user"></i></span>
+                                    <span class="nav-link-text">Quản lý thành viên</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-with-badge" href="@Url.Action("Index","HoatDong")">
+                                    <span class="feather-icon"><i data-feather="eye"></i></span>
+                                    <span class="nav-link-text">Quản lý hoạt động</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-with-badge" href="@Url.Action("Index","Bans")">
+                                    <span class="feather-icon"><i data-feather="users"></i></span>
+                                    <span class="nav-link-text">Quản lý ban (nhóm...)</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </div>
         </nav>
