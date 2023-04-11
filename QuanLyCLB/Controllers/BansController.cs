@@ -11,37 +11,15 @@ using EntityState = System.Data.Entity.EntityState;
 
 namespace QuanLyCLB.Controllers
 {
-    public class BansController : Controller
+    public class BansController : ParentsController
     {
         private QuanLyCLBEntities db = new QuanLyCLBEntities();
-
+        TaiKhoan acc = System.Web.HttpContext.Current.Session["Login"] as TaiKhoan;
         // GET: Bans
         public ActionResult Index()
         {
-            var bans = db.Bans.Include(b => b.ToChuc);
+            var bans = db.Bans.Where(i => i.ToChucId == acc.ToChucId);
             return View(bans.ToList());
-        }
-
-        // GET: Bans/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Ban ban = db.Bans.Find(id);
-            if (ban == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ban);
-        }
-
-        // GET: Bans/Create
-        public ActionResult Create()
-        {
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten");
-            return View();
         }
 
         // POST: Bans/Create
@@ -55,11 +33,11 @@ namespace QuanLyCLB.Controllers
             {
                 db.Bans.Add(ban);
                 db.SaveChanges();
+                ThongBao("Thêm mới thành công!!!", "success");
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten", ban.ToChucId);
-            return View(ban);
+            ThongBao("Có lỗi xảy ra, vui lòng thử lại!!!", "error");
+            return RedirectToAction("Index");
         }
 
         // GET: Bans/Edit/5
@@ -74,7 +52,6 @@ namespace QuanLyCLB.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten", ban.ToChucId);
             return View(ban);
         }
 
@@ -89,9 +66,10 @@ namespace QuanLyCLB.Controllers
             {
                 db.Entry(ban).State = EntityState.Modified;
                 db.SaveChanges();
+                ThongBao("Chỉnh sửa thành công!!!", "success");
                 return RedirectToAction("Index");
             }
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten", ban.ToChucId);
+            ThongBao("Có lỗi xảy ra, vui lòng thử lại!!!", "error");
             return View(ban);
         }
 
@@ -107,16 +85,13 @@ namespace QuanLyCLB.Controllers
             {
                 return HttpNotFound();
             }
-            return View(ban);
-        }
-
-        // POST: Bans/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Ban ban = db.Bans.Find(id);
+            List<ThanhVien> tv = (List<ThanhVien>) db.ThanhViens.Where(x => x.BanId == id).ToList();
+            foreach(ThanhVien item in tv)
+            {
+                db.ThanhViens.Remove(item);
+            }
             db.Bans.Remove(ban);
+            ThongBao("Xoá thành công!!", "success");
             db.SaveChanges();
             return RedirectToAction("Index");
         }

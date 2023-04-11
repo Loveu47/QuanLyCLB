@@ -48,6 +48,7 @@
           <Property Name="SDT" Type="nchar" MaxLength="15" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="QLCapCao" Type="bit" />
+          <Property Name="Code" Type="int" />
         </EntityType>
         <EntityType Name="ThanhVien">
           <Key>
@@ -213,6 +214,7 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="QLCapCao" Type="Boolean" />
           <NavigationProperty Name="ToChuc" Relationship="Self.FK_TaiKhoan_ToChuc" FromRole="TaiKhoan" ToRole="ToChuc" />
+          <Property Name="Code" Type="Int32" />
         </EntityType>
         <EntityType Name="ThanhVien">
           <Key>
@@ -375,6 +377,7 @@
           <EntitySetMapping Name="TaiKhoans">
             <EntityTypeMapping TypeName="QuanLyCLBModel.TaiKhoan">
               <MappingFragment StoreEntitySet="TaiKhoan">
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ToChucId" ColumnName="ToChucId" />
                 <ScalarProperty Name="TaiKhoan1" ColumnName="TaiKhoan" />

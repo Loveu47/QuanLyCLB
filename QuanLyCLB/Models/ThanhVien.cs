@@ -11,17 +11,23 @@ namespace QuanLyCLB.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class ThanhVien
     {
         public int Id { get; set; }
+        [DisplayName("Họ tên")]
         public string HoTen { get; set; }
         public string MSSV { get; set; }
+        [DisplayName("Số điện thoại")]
         public string SDT { get; set; }
+        [DisplayName("Ngành học")]
         public string NganhHoc { get; set; }
+        [DisplayName("Ngày sinh")]
         public Nullable<System.DateTime> NgaySinh { get; set; }
         public Nullable<int> ToChucId { get; set; }
         public Nullable<int> BanId { get; set; }
+        [DisplayName("Chức vụ")]
         public string ChucVu { get; set; }
     
         public virtual Ban Ban { get; set; }

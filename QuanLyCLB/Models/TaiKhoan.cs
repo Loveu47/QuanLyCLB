@@ -28,7 +28,7 @@ namespace QuanLyCLB.Models
         public string Email { get; set; }
         [DisplayName("Quản lý cấp cao?")]
         public Nullable<bool> QLCapCao { get; set; }
-    
+        public Nullable<int> Code { get; set; }
         public virtual ToChuc ToChuc { get; set; }
     }
 }

@@ -11,7 +11,8 @@ namespace QuanLyCLB.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Ban
     {
         public Ban()
@@ -20,7 +21,9 @@ namespace QuanLyCLB.Models
         }
     
         public int Id { get; set; }
+        [DisplayName("Tên Ban")]
         public string TenBan { get; set; }
+        [DisplayName("Mô tả")]
         public string MoTa { get; set; }
         public Nullable<int> ToChucId { get; set; }
     

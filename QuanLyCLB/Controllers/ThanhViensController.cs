@@ -11,37 +11,20 @@ using EntityState = System.Data.Entity.EntityState;
 
 namespace QuanLyCLB.Controllers
 {
-    public class ThanhViensController : Controller
+    public class ThanhViensController : ParentsController
     {
         private QuanLyCLBEntities db = new QuanLyCLBEntities();
-
+        TaiKhoan acc = System.Web.HttpContext.Current.Session["Login"] as TaiKhoan;
         // GET: ThanhViens
         public ActionResult Index()
         {
-            var thanhViens = db.ThanhViens.Include(t => t.Ban).Include(t => t.ToChuc);
+            var thanhViens = db.ThanhViens.Where(j=>j.ToChucId == acc.ToChucId);
             return View(thanhViens.ToList());
         }
-
-        // GET: ThanhViens/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ThanhVien thanhVien = db.ThanhViens.Find(id);
-            if (thanhVien == null)
-            {
-                return HttpNotFound();
-            }
-            return View(thanhVien);
-        }
-
         // GET: ThanhViens/Create
         public ActionResult Create()
         {
-            ViewBag.BanId = new SelectList(db.Bans, "Id", "TenBan");
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten");
+            ViewBag.BanId = new SelectList(db.Bans.Where(j=>j.ToChucId == acc.ToChucId), "Id", "TenBan");
             return View();
         }
 
@@ -53,15 +36,17 @@ namespace QuanLyCLB.Controllers
         public ActionResult Create([Bind(Include = "Id,HoTen,MSSV,SDT,NganhHoc,NgaySinh,ToChucId,BanId,ChucVu")] ThanhVien thanhVien)
         {
             if (ModelState.IsValid)
-            {
+            {   if(thanhVien.ChucVu == null)
+                {
+                    thanhVien.ChucVu = "Thành viên";
+                }
                 db.ThanhViens.Add(thanhVien);
                 db.SaveChanges();
+                ThongBao("Thêm mới thành công!!!", "success");
                 return RedirectToAction("Index");
             }
-
-            ViewBag.BanId = new SelectList(db.Bans, "Id", "TenBan", thanhVien.BanId);
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten", thanhVien.ToChucId);
-            return View(thanhVien);
+            ThongBao("Có lỗi xảy ra, vui lòng thử lại!!!", "error");
+            return RedirectToAction("Index");
         }
 
         // GET: ThanhViens/Edit/5
@@ -76,8 +61,7 @@ namespace QuanLyCLB.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BanId = new SelectList(db.Bans, "Id", "TenBan", thanhVien.BanId);
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten", thanhVien.ToChucId);
+            ViewBag.BanId = new SelectList(db.Bans.Where(j=>j.ToChucId == acc.ToChucId), "Id", "TenBan", thanhVien.BanId);
             return View(thanhVien);
         }
 
@@ -92,11 +76,11 @@ namespace QuanLyCLB.Controllers
             {
                 db.Entry(thanhVien).State = EntityState.Modified;
                 db.SaveChanges();
+                ThongBao("Chỉnh sửa thành công!!!", "success");
                 return RedirectToAction("Index");
             }
-            ViewBag.BanId = new SelectList(db.Bans, "Id", "TenBan", thanhVien.BanId);
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten", thanhVien.ToChucId);
-            return View(thanhVien);
+            ThongBao("Có lỗi xảy ra, vui lòng thử lại!!!", "error");
+            return RedirectToAction("Index");
         }
 
         // GET: ThanhViens/Delete/5
@@ -111,17 +95,9 @@ namespace QuanLyCLB.Controllers
             {
                 return HttpNotFound();
             }
-            return View(thanhVien);
-        }
-
-        // POST: ThanhViens/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            ThanhVien thanhVien = db.ThanhViens.Find(id);
             db.ThanhViens.Remove(thanhVien);
             db.SaveChanges();
+            ThongBao("Xoá thành công!!!", "success");
             return RedirectToAction("Index");
         }
 
