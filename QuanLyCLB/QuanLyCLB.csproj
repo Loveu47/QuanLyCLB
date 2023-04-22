@@ -133,7 +133,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BansController.cs" />
-    <Compile Include="Controllers\HoatDongController.cs" />
+    <Compile Include="Controllers\HoatDongsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParentsController.cs" />
     <Compile Include="Controllers\TaiKhoansController.cs" />
@@ -1533,14 +1533,22 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\ToChucs\Edit.cshtml" />
     <Content Include="Views\ToChucs\Index.cshtml" />
-    <Content Include="Views\HoatDong\Index.cshtml" />
-    <Content Include="Views\HoatDong\ChiTiet.cshtml" />
+    <Content Include="Views\HoatDongs\Index.cshtml" />
+    <Content Include="Views\HoatDongs\ChiTiet.cshtml" />
     <Content Include="Views\TaiKhoans\Index.cshtml" />
     <Content Include="Views\ThanhViens\Create.cshtml" />
     <Content Include="Views\ThanhViens\Edit.cshtml" />
     <Content Include="Views\ThanhViens\Index.cshtml" />
     <Content Include="Views\Bans\Edit.cshtml" />
     <Content Include="Views\Bans\Index.cshtml" />
+    <Content Include="Views\Auth\QuenMatKhau.cshtml" />
+    <Content Include="Views\HoatDongs\Create.cshtml" />
+    <Content Include="Views\HoatDongs\Delete.cshtml" />
+    <Content Include="Views\HoatDongs\Details.cshtml" />
+    <Content Include="Views\HoatDongs\Edit.cshtml" />
+    <Content Include="Views\HoatDongs\Index2.cshtml" />
+    <Content Include="Views\Auth\ResetPassword.cshtml" />
+    <Content Include="Views\HoatDongs\QuanLy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

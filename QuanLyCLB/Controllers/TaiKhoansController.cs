@@ -36,7 +36,8 @@ namespace QuanLyCLB.Controllers
             if (ModelState.IsValid)
             {
                 int dem = db.TaiKhoans.Where(j => j.TaiKhoan1 == taiKhoan.TaiKhoan1).Count();
-                if (dem == 0)
+                int mail = db.TaiKhoans.Where(i=>i.Email == taiKhoan.Email).Count();
+                if (dem == 0 || mail ==0)
                 {
                     db.TaiKhoans.Add(taiKhoan);
                     db.SaveChanges();
@@ -45,7 +46,7 @@ namespace QuanLyCLB.Controllers
                 }
                 else
                 {
-                    ThongBao("Tên tài khoản đã tồn tại!!!", "error");
+                    ThongBao("Tên tài khoản hoặc email đã tồn tại!!!", "error");
                     return RedirectToAction("Index");
                 }  
             }

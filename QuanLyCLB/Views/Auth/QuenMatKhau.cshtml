@@ -1,64 +1,52 @@
-﻿
+﻿@model QuanLyCLB.Models.TaiKhoan
 @{
     Layout = null;
-    ViewBag.Title = "Login";
 }
 
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>@ViewBag.Title</title>
-    <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
+    <title>Quên mật khẩu</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="~/Content/favicon.ico" type="image/x-icon">
-
-    <!-- Toggles CSS -->
-    <link href="~/Content/vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="~Content/favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Custom CSS -->
     <link href="~/Content/dist/css/style.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
     <!-- Preloader -->
     <div class="preloader-it">
         <div class="loader-pendulums"></div>
     </div>
     <!-- /Preloader -->
-    <!-- HK Wrapper -->
     <div class="hk-wrapper">
 
         <!-- Main Content -->
         <div class="hk-pg-wrapper hk-auth-wrapper">
-            <header class="d-flex justify-content-end align-items-center">
-            </header>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-12 pa-0">
                         <div class="auth-form-wrap pt-xl-0 pt-70">
-                            <div class="auth-form w-xl-30 w-lg-55 w-sm-75 w-100">
+                            <div class="auth-form w-xl-30 w-sm-50 w-100">
+
                                 @using (Html.BeginForm())
                                 {
                                     @Html.ValidationSummary(true)
-                                    <h1 class="display-4 text-center mb-10">Chào mừng bạn !!!</h1>
-                                    <p class="text-center mb-30">Vui lòng đăng nhập để tiếp tục.</p>
-                                    <h5 style="color:red;text-align:center;margin-bottom:30px">@ViewBag.ThongBao@TempData["Tb"]</h5>
+                                    <h1 class="display-5 mb-10 text-center">Bạn cần lấy lại mật khẩu?</h1>
+                                    <p class="mb-30 text-center">Chúng tôi sẽ gửi mã xác nhận vào email khôi phục mật khẩu của bạn.</p>
                                     <div class="form-group">
-                                        <input class="form-control" required name="account" placeholder="Tài khoản" type="text">
+                                        <input class="form-control" placeholder="Email" name="Email" type="email">
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                     </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input class="form-control" required name="pass" placeholder="Mật khẩu" type="password">
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-primary btn-block" type="submit">Login</button>
-                                    <p class="text-center">Quên mật khẩu? <a href="@Url.Action("QuenMatKhau","Auth")">Click Here</a></p>
-                                    }
+                                    <button class="btn btn-primary btn-block mb-20" type="submit">Gửi</button>
+                                    <p class="text-right"><a href="@Url.Action("Login", "Auth")">Trở về đăng nhập</a></p>
+                                }
                             </div>
                         </div>
                     </div>
@@ -68,8 +56,7 @@
         <!-- /Main Content -->
 
     </div>
-    <!-- /HK Wrapper -->
-    <!-- JavaScript -->
+    <!-- /#wrapper -->
     <!-- jQuery -->
     <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
 
@@ -83,10 +70,22 @@
     <!-- Fancy Dropdown JS -->
     <script src="~/Content/dist/js/dropdown-bootstrap-extended.js"></script>
 
+    <!-- Owl JavaScript -->
+    <script src="~/Content/vendors/owl.carousel/dist/owl.carousel.min.js"></script>
+
+    <!-- Switchery JavaScript -->
+    <script src="~/Content/vendors/switchery/dist/switchery.min.js"></script>
+
     <!-- FeatherIcons JavaScript -->
     <script src="~/Content/dist/js/feather.min.js"></script>
+
+    <!-- Tablesaw JavaScript -->
+    <script src="~/Content/vendors/tablesaw/dist/tablesaw.jquery.js"></script>
+    <script src="~/Content/dist/js/tablesaw-data.js"></script>
 
     <!-- Init JavaScript -->
     <script src="~/Content/dist/js/init.js"></script>
 </body>
+
 </html>
+
