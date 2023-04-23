@@ -11,14 +11,21 @@ namespace QuanLyCLB.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class HoatDong
     {
         public int Id { get; set; }
         public Nullable<int> ToChucId { get; set; }
+        [DisplayName("Tiêu đề")]
         public string TieuDe { get; set; }
+        [DisplayName("Nội dung")]
         public string NoiDung { get; set; }
-        public Nullable<System.DateTime> ThoiGian { get; set; }
+        [DisplayName("Thời gian")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public System.DateTime ThoiGian { get; set; }
+        [DisplayName("Ảnh chính")]
         public string AnhChinh { get; set; }
     
         public virtual ToChuc ToChuc { get; set; }

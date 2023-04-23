@@ -24,12 +24,6 @@ namespace QuanLyCLB.Controllers
             return View(db.ToChucs.ToList());
         }
 
-        // GET: ToChucs/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: ToChucs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -99,10 +93,14 @@ namespace QuanLyCLB.Controllers
                     Logo.SaveAs(path);
                 }
                 toChuc.Logo = "/Content/upload/" + _fn;
+            } else
+            {
+                ToChuc tc = db.ToChucs.Find(toChuc.Id);
+                toChuc.Logo = tc.Logo;
             }
             if (ModelState.IsValid)
             {
-                db.Entry(toChuc).State = EntityState.Modified;
+                db.Set<ToChuc>().AddOrUpdate(toChuc);
                 db.SaveChanges();
                 ThongBao("Sửa thành công!!!", "success");
                 return RedirectToAction("Index");

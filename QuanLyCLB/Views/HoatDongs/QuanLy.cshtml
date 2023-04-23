@@ -1,8 +1,140 @@
-﻿
+﻿@model IEnumerable<QuanLyCLB.Models.HoatDong>
 @{
-    ViewBag.Title = "QuanLy";
+    ViewBag.Title = "Quản lý hoạt động";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = 1;
+    var acc = Session["Login"] as QuanLyCLB.Models.TaiKhoan;
 }
 
-<h2>Nothing</h2>
+<div class="container mt-xl-50 mt-sm-30 mt-15">
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <div>
+            <h2 class="hk-pg-title font-weight-600">Quản lý hoạt động</h2>
+        </div>
+    </div>
+    <!-- /Title -->
+    <!-- Row -->
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+                <h5 class="hk-sec-title">Toàn bộ hoạt động</h5>
+                <a href="@Url.Action("Create","HoatDongs")" class="btn btn-outline-primary btn-rounded mb-10" >
+                    Thêm mới
+                </a>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="table-wrap">
+                            <table id="datable_1" class="table table-hover w-100 display pb-30">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            STT
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.TieuDe)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.AnhChinh)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ThoiGian)
+                                        </th>
+                                        <th>
+                                            Chức năng
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @i
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TieuDe)
+                                            </td>
+                                            <td>
+                                                @if (item.AnhChinh != null)
+                                                {
+                                                    <img src="@Url.Content(item.AnhChinh)" width="64px" height="64px" alt="Ảnh" />
 
+                                                }
+                                                else
+                                                {<span>NULL</span>}
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ThoiGian)
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("Edit", "HoatDongs", new { id = item.Id })" class="btn btn-icon btn-icon-circle btn-secondary btn-icon-style-3"><span class="btn-icon-wrap"><i class="fa fa-pencil"></i></span></a>
+                                                <button title="Xoá" class="btn btn-icon btn-icon-circle btn-info btn-icon-style-3" onclick="@{ViewData["id"] = item.Id; } " data-toggle="modal" data-target="#exampleModal"><span class="btn-icon-wrap"><i class="icon-trash"></i></span></button>
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>
+                                            STT
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.TieuDe)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.AnhChinh)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ThoiGian)
+                                        </th>
+                                        <th>
+                                            Chức năng
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- /Row -->
+
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xoá hoạt động</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Bạn chắc chắn muốn xoá?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <a href="@Url.Action("Delete","HoatDongs", new {id = ViewData["id"] })" class="btn btn-primary">Xác nhận</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/dist/js/dataTables-data.js"></script>
+    <script src="~/Content/vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+    <script src="~/Content/dist/js/jquery.slimscroll.js"></script>
+    <script src="~/Content/vendors/jquery-toggles/toggles.min.js"></script>
+    <script src="~/Content/dist/js/toggle-data.js"></script>
+
+}

@@ -1543,10 +1543,7 @@
     <Content Include="Views\Bans\Index.cshtml" />
     <Content Include="Views\Auth\QuenMatKhau.cshtml" />
     <Content Include="Views\HoatDongs\Create.cshtml" />
-    <Content Include="Views\HoatDongs\Delete.cshtml" />
-    <Content Include="Views\HoatDongs\Details.cshtml" />
     <Content Include="Views\HoatDongs\Edit.cshtml" />
-    <Content Include="Views\HoatDongs\Index2.cshtml" />
     <Content Include="Views\Auth\ResetPassword.cshtml" />
     <Content Include="Views\HoatDongs\QuanLy.cshtml" />
   </ItemGroup>

@@ -1,70 +1,93 @@
 ﻿@model QuanLyCLB.Models.HoatDong
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Chỉnh sửa hoạt động";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var acc = Session["Login"] as QuanLyCLB.Models.TaiKhoan;
 }
 
-<h2>Edit</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>HoatDong</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ToChucId, "ToChucId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ToChucId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ToChucId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NoiDung, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NoiDung, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NoiDung, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThoiGian, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThoiGian, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThoiGian, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TieuDe, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TieuDe, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TieuDe, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AnhChinh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AnhChinh, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AnhChinh, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+<div class="container mt-xl-50 mt-sm-30 mt-15">
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></span></span>Quản lý hoạt động</h4>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+                <h5 class="hk-sec-title">Chỉnh sửa hoạt động</h5>
+                @using (Html.BeginForm("Edit", "HoatDongs", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+
+                        <input type="text" name="ToChucId" value="@acc.ToChucId" hidden />
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TieuDe, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.EditorFor(model => model.TieuDe, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TieuDe, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm">
+                                    @Html.LabelFor(model => model.NoiDung, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="tinymce-wrap">
+                                        @Html.TextAreaFor(model => model.NoiDung, new { @class = "tinymce" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ngaythanhlap">Thời gian<small>(mm/dd/yyyy)</small></label>
+                            <input type="text" class="form-control" name="ThoiGian" id="ngaythanhlap" value="@Model.ThoiGian.ToShortDateString()">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Logo">Ảnh chính<small>(Ảnh sẽ được giữ nguyên nếu không up ảnh mới)</small></label><br />
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                                <div class="form-control text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                <span class="input-group-append">
+                                    <span class=" btn btn-primary btn-file">
+                                        <span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span>
+                                        <input type="hidden"><input type="file" id="Logo" name="Logo" value="@Model.AnhChinh">
+                                    </span>
+                                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                <a href="@Url.Action("Index","HoatDongs")" class="btn btn-light">Trở về</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </section>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- Tinymce JavaScript -->
+    <script src="~/Content/vendors/tinymce/tinymce.min.js"></script>
+
+    <!-- Tinymce Wysuhtml5 Init JavaScript -->
+    <script src="~/Content/dist/js/tinymce-data.js"></script>
+    <script src="~/Content/vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+    <script src="~/Content/dist/js/jquery.slimscroll.js"></script>
+    <script src="~/Content/vendors/jquery-toggles/toggles.min.js"></script>
+    <script src="~/Content/dist/js/toggle-data.js"></script>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

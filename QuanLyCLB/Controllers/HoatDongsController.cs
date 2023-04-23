@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -11,24 +13,23 @@ using EntityState = System.Data.Entity.EntityState;
 
 namespace QuanLyCLB.Controllers
 {
-    public class HoatDongsController : Controller
+    public class HoatDongsController : ParentsController
     {
         private QuanLyCLBEntities db = new QuanLyCLBEntities();
         TaiKhoan acc = System.Web.HttpContext.Current.Session["Login"] as TaiKhoan;
         // GET: HoatDongs
         public ActionResult Index()
-        {   if(acc.ToChucId == null)
+        {
+            if (acc.ToChucId == null)
             {
-                var hoatDongs = db.HoatDongs.Include(h => h.ToChuc);
+                var hoatDongs = db.HoatDongs.Include(h => h.ToChuc).OrderByDescending(j=>j.ThoiGian);
                 return View("Index", hoatDongs.ToList());
-                
-                
-            } else
+            }
+            else
             {
                 var hoatDongs = db.HoatDongs.Include(h => h.ToChuc).Where(j => j.ToChucId == acc.ToChucId);
                 return View("QuanLy", hoatDongs.ToList());
             }
-
         }
         public ActionResult ChiTiet(int? id)
         {
@@ -46,43 +47,40 @@ namespace QuanLyCLB.Controllers
                 return View(hd);
             }
         }
-        // GET: HoatDongs/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HoatDong hoatDong = db.HoatDongs.Find(id);
-            if (hoatDong == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hoatDong);
-        }
 
-        // GET: HoatDongs/Create
         public ActionResult Create()
         {
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten");
             return View();
         }
-
         // POST: HoatDongs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ToChucId,NoiDung,ThoiGian,TieuDe,AnhChinh")] HoatDong hoatDong)
+        [ValidateInput(false)]
+        public ActionResult Create([Bind(Include = "Id,ToChucId,NoiDung,ThoiGian,TieuDe")] HoatDong hoatDong, HttpPostedFileBase AnhChinh)
         {
+            if (AnhChinh != null && AnhChinh.ContentLength > 0)
+            {
+                string _fn = Path.GetFileName(AnhChinh.FileName);
+                string path = Path.Combine(Server.MapPath("/Content/upload/"), _fn);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                    AnhChinh.SaveAs(path);
+                }
+                else
+                {
+                    AnhChinh.SaveAs(path);
+                }
+                hoatDong.AnhChinh = "/Content/upload/" + _fn;
+            }
             if (ModelState.IsValid)
             {
                 db.HoatDongs.Add(hoatDong);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten", hoatDong.ToChucId);
             return View(hoatDong);
         }
 
@@ -98,7 +96,6 @@ namespace QuanLyCLB.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten", hoatDong.ToChucId);
             return View(hoatDong);
         }
 
@@ -107,15 +104,34 @@ namespace QuanLyCLB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ToChucId,NoiDung,ThoiGian,TieuDe,AnhChinh")] HoatDong hoatDong)
+        [ValidateInput(false)]
+        public ActionResult Edit([Bind(Include = "Id,ToChucId,NoiDung,ThoiGian,TieuDe")] HoatDong hoatDong, HttpPostedFileBase Logo)
         {
+            if (Logo != null && Logo.ContentLength > 0)
+            {
+                string _fn = Path.GetFileName(Logo.FileName);
+                string path = Path.Combine(Server.MapPath("/Content/upload/"), _fn);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                    Logo.SaveAs(path);
+                }
+                else
+                {
+                    Logo.SaveAs(path);
+                }
+                hoatDong.AnhChinh = "/Content/upload/" + _fn;
+            } else
+            {
+                HoatDong hd = db.HoatDongs.Find(hoatDong.Id);
+                hoatDong.AnhChinh = hd.AnhChinh;
+            }
             if (ModelState.IsValid)
             {
-                db.Entry(hoatDong).State = EntityState.Modified;
+                db.Set<HoatDong>().AddOrUpdate(hoatDong);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten", hoatDong.ToChucId);
             return View(hoatDong);
         }
 
@@ -131,17 +147,9 @@ namespace QuanLyCLB.Controllers
             {
                 return HttpNotFound();
             }
-            return View(hoatDong);
-        }
-
-        // POST: HoatDongs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            HoatDong hoatDong = db.HoatDongs.Find(id);
             db.HoatDongs.Remove(hoatDong);
             db.SaveChanges();
+            ThongBao("Xoá thành công!!!", "success");
             return RedirectToAction("Index");
         }
 
