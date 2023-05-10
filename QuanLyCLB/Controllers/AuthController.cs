@@ -68,12 +68,8 @@ namespace QuanLyCLB.Controllers
                 ModelState.AddModelError("Email", "Email không tồn tại trong hệ thống");
                 return View();
             }
-
             // Tạo mã xác nhận ngẫu nhiên
             var code = new Random().Next(100000, 999999);
-
-            // Lưu mã xác nhận vào CSDL
-            
 
             // Gửi email chứa mã xác nhận đến địa chỉ email của người dùng
             var message = new MailMessage();
@@ -82,7 +78,7 @@ namespace QuanLyCLB.Controllers
             message.Body = "Tài khoản: "+ user.TaiKhoan1+ " .Mã xác nhận của bạn là: " + code;
 
             var smtp = new SmtpClient();
-            smtp.Send(message);
+            smtp.Send(message); 
             user.Code = code;
             db.SaveChanges();
             return RedirectToAction("ResetPassword");

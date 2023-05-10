@@ -73,7 +73,7 @@
                                             </td>
                                             <td>
                                                 @if (item.NgayGiaiThe == null)
-                                                {
+                                                {   <a href="@Url.Action("Details", "ToChucs", new { id = item.Id })" class="btn btn-icon btn-icon-circle btn-secondary btn-icon-style-3"><span class="btn-icon-wrap"><i class="fa fa-info"></i></span></a>
                                                     <a href="@Url.Action("Edit", "ToChucs", new { id = item.Id })" class="btn btn-icon btn-icon-circle btn-secondary btn-icon-style-3"><span class="btn-icon-wrap"><i class="fa fa-pencil"></i></span></a>
                                                     <button class="btn btn-icon btn-icon-circle btn-info btn-icon-style-3" onclick="@{ViewData["id"] = item.Id; } " data-toggle="modal" data-target="#exampleModal"><span class="btn-icon-wrap"><i class="icon-trash"></i></span></button>
                                                 }

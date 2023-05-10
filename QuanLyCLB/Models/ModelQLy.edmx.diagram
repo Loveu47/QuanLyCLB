@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="QuanLyCLBModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyCLBModel.TaiKhoan" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyCLBModel.ThanhVien" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyCLBModel.ToChuc" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCLBModel.ToChuc" Width="1.5" PointX="0.625" PointY="4.25" IsExpanded="true" />
         <AssociationConnector Association="QuanLyCLBModel.FK_Ban_ToChuc" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyCLBModel.FK_ThanhVien_Ban" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyCLBModel.FK_HoatDong_ToChuc" ManuallyRouted="false" />

@@ -23,7 +23,23 @@ namespace QuanLyCLB.Controllers
         {
             return View(db.ToChucs.ToList());
         }
-
+        public ActionResult Details(int? id)
+        {   
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var tochuc = db.ToChucs.Find(id);
+            ViewData["SoTV"] = db.ThanhViens.Where(j => j.ToChucId == id).Count();
+            ViewData["SoBan"] = db.Bans.Where(j => j.ToChucId == id).Count();
+            ViewData["SoHD"] = db.HoatDongs.Where(j => j.ToChucId == id).Count();
+            if (tochuc == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.HD = db.HoatDongs.Where(i => i.ToChucId == id).ToList();
+            return View(tochuc);
+        }
         // POST: ToChucs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
