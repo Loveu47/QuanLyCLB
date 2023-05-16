@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyCLB.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -10,6 +11,7 @@ namespace QuanLyCLB.Controllers
 {
     public class ParentsController : Controller
     {
+        QuanLyCLBEntities db = new QuanLyCLBEntities();
         // GET: Parents
         public ParentsController()
         {
@@ -46,6 +48,17 @@ namespace QuanLyCLB.Controllers
             else if (type == "error")
             {
                 TempData["Type"] = "alert-inv-danger";
+            }
+        }
+        public bool QL(int id)
+        {
+            TaiKhoan ql = db.TaiKhoans.Find(id);
+            if (ql.QLCapCao == true)
+            {
+                return true;
+            } else
+            {
+                return false;
             }
         }
     }

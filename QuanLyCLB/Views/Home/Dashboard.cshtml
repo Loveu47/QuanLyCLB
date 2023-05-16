@@ -14,12 +14,12 @@
     <div class="hk-row">
         <div class="col-lg-3 col-sm-6  ">
             <div class="card card-sm ">
-                <a href="@Url.Action("Index","ToChucs")">
+                <a href="@Url.Action("Index","ThanhViens")">
                     <div class="card-body bg-gradient-primary border rounded-5">
-                        <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Số tổ chức</span>
+                        <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Số thành viên</span>
                         <div class="d-flex align-items-center justify-content-between position-relative">
                             <div>
-                                <span class="d-block display-5 font-weight-400 text-white">@TempData["TongSo"]</span>
+                                <span class="d-block display-5 font-weight-400 text-white">@TempData["ThanhVien"]</span>
                             </div>
                         </div>
                     </div>
@@ -28,14 +28,17 @@
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="card card-sm">
-                <div class="card-body bg-gradient-success border rounded-5">
-                    <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Số thành viên</span>
-                    <div class="d-flex align-items-center justify-content-between position-relative">
-                        <div>
-                            <span class="d-block display-5 font-weight-400 text-white">@TempData["ThanhVien"]</span>
+                <a href="@Url.Action("Index","Bans")">
+
+                    <div class="card-body bg-gradient-success border rounded-5">
+                        <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Số ban (nhóm...)</span>
+                        <div class="d-flex align-items-center justify-content-between position-relative">
+                            <div>
+                                <span class="d-block display-5 font-weight-400 text-white">@TempData["Ban"]</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6">
@@ -54,16 +57,14 @@
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="card card-sm">
-                <a href="@Url.Action("Index","TaiKhoans")">
-                    <div class="card-body bg-gradient-heaven border rounded-5">
-                        <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Cán bộ quản lý</span>
-                        <div class="d-flex align-items-center justify-content-between position-relative">
-                            <div>
-                                <span class="d-block display-5 font-weight-400 text-white">@TempData["CanBo"]</span>
-                            </div>
+                <div class="card-body bg-gradient-heaven border rounded-5">
+                    <span class="d-block font-11 font-weight-500 text-white text-uppercase mb-10">Cán bộ quản lý</span>
+                    <div class="d-flex align-items-center justify-content-between position-relative">
+                        <div>
+                            <span class="d-block display-5 font-weight-400 text-white">@TempData["QuanLy"]</span>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
 

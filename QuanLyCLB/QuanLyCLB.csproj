@@ -1412,6 +1412,7 @@
     <Content Include="Views\Auth\ResetPassword.cshtml" />
     <Content Include="Views\HoatDongs\QuanLy.cshtml" />
     <Content Include="Views\ToChucs\Details.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

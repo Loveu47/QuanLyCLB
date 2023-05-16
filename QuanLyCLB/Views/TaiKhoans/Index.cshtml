@@ -8,7 +8,6 @@
 @section css{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 }
-
 <div class="container mt-xl-50 mt-sm-30 mt-15">
     <!-- Title -->
     <div class="hk-pg-header">
@@ -194,7 +193,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                <a href="@Url.Action("Delete","TaiKhoans", new {id = ViewData["id"] })" class="btn btn-primary">Xác nhận</a>
+                <a href="@Url.Action("Delete", "TaiKhoans", new { id = ViewData["id"] })" class="btn btn-primary">Xác nhận</a>
             </div>
         </div>
     </div>

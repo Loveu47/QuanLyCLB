@@ -13,13 +13,20 @@ namespace QuanLyCLB.Controllers
     public class TaiKhoansController : ParentsController
     {
         private QuanLyCLBEntities db = new QuanLyCLBEntities();
+        TaiKhoan acc = System.Web.HttpContext.Current.Session["Login"] as TaiKhoan;
 
         // GET: TaiKhoans
         public ActionResult Index()
-        {
-            ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten");
-            var taiKhoans = db.TaiKhoans.Include(t => t.ToChuc);
-            return View(taiKhoans.ToList());
+        {   if(acc.QLCapCao == true)
+            {
+                ViewBag.ToChucId = new SelectList(db.ToChucs, "Id", "Ten");
+                var taiKhoans = db.TaiKhoans.Include(t => t.ToChuc);
+                return View(taiKhoans.ToList());
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         // GET: TaiKhoans/Create

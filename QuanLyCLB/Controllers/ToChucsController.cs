@@ -17,14 +17,22 @@ namespace QuanLyCLB.Controllers
     public class ToChucsController : ParentsController
     {
         private QuanLyCLBEntities db = new QuanLyCLBEntities();
+        TaiKhoan acc = System.Web.HttpContext.Current.Session["Login"] as TaiKhoan;
 
         // GET: ToChucs
         public ActionResult Index()
         {
-            return View(db.ToChucs.ToList());
+            if (acc.QLCapCao == true)
+            {
+                return View(db.ToChucs.ToList());
+            }
+            else
+            {
+                return View("Error");
+            }
         }
         public ActionResult Details(int? id)
-        {   
+        {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -46,31 +54,31 @@ namespace QuanLyCLB.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Ten,MoTa,NgayThanhLap,NgayGiaiThe")] ToChuc toChuc, HttpPostedFileBase Logo)
-        { 
-                if (Logo != null && Logo.ContentLength > 0)
+        {
+            if (Logo != null && Logo.ContentLength > 0)
+            {
+                string _fn = Path.GetFileName(Logo.FileName);
+                string path = Path.Combine(Server.MapPath("/Content/upload/"), _fn);
+                if (System.IO.File.Exists(path))
                 {
-                    string _fn = Path.GetFileName(Logo.FileName);
-                    string path = Path.Combine(Server.MapPath("/Content/upload/"), _fn);
-                    if (System.IO.File.Exists(path))
-                    {
-                        System.IO.File.Delete(path);
-                        Logo.SaveAs(path);
-                    }
-                    else
-                    {
-                        Logo.SaveAs(path);
-                    }
-                    toChuc.Logo = "/Content/upload/" + _fn;
+                    System.IO.File.Delete(path);
+                    Logo.SaveAs(path);
                 }
-                if (ModelState.IsValid)
+                else
                 {
-                    db.ToChucs.Add(toChuc);
-                    db.SaveChanges();
-                    ThongBao("Thêm mới thành công!!!", "success");
-                    return RedirectToAction("Index");
+                    Logo.SaveAs(path);
                 }
-                ThongBao("Thêm thất bại!!!", "error");
-                return View(toChuc);
+                toChuc.Logo = "/Content/upload/" + _fn;
+            }
+            if (ModelState.IsValid)
+            {
+                db.ToChucs.Add(toChuc);
+                db.SaveChanges();
+                ThongBao("Thêm mới thành công!!!", "success");
+                return RedirectToAction("Index");
+            }
+            ThongBao("Thêm thất bại!!!", "error");
+            return View(toChuc);
         }
 
         // GET: ToChucs/Edit/5
@@ -109,7 +117,8 @@ namespace QuanLyCLB.Controllers
                     Logo.SaveAs(path);
                 }
                 toChuc.Logo = "/Content/upload/" + _fn;
-            } else
+            }
+            else
             {
                 ToChuc tc = db.ToChucs.Find(toChuc.Id);
                 toChuc.Logo = tc.Logo;
@@ -136,7 +145,8 @@ namespace QuanLyCLB.Controllers
             if (toChuc == null)
             {
                 return HttpNotFound();
-            } else
+            }
+            else
             {
                 toChuc.NgayGiaiThe = DateTime.Now;
                 db.ToChucs.AddOrUpdate();
