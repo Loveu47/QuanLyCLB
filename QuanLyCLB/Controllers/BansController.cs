@@ -17,9 +17,15 @@ namespace QuanLyCLB.Controllers
         TaiKhoan acc = System.Web.HttpContext.Current.Session["Login"] as TaiKhoan;
         // GET: Bans
         public ActionResult Index()
-        {
-            var bans = db.Bans.Where(i => i.ToChucId == acc.ToChucId);
-            return View(bans.ToList());
+        {   if (acc.QLCapCao != true)
+            {
+                var bans = db.Bans.Where(i => i.ToChucId == acc.ToChucId);
+                return View(bans.ToList());
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         // POST: Bans/Create

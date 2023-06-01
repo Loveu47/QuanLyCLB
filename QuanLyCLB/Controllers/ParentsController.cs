@@ -50,16 +50,5 @@ namespace QuanLyCLB.Controllers
                 TempData["Type"] = "alert-inv-danger";
             }
         }
-        public bool QL(int id)
-        {
-            TaiKhoan ql = db.TaiKhoans.Find(id);
-            if (ql.QLCapCao == true)
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
-        }
     }
 }

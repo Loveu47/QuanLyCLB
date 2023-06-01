@@ -18,13 +18,20 @@ namespace QuanLyCLB.Controllers
         // GET: ThanhViens
         public ActionResult Index()
         {
-            var thanhViens = db.ThanhViens.Where(j=>j.ToChucId == acc.ToChucId);
-            return View(thanhViens.ToList());
+            if (acc.QLCapCao != true)
+            {
+                var thanhViens = db.ThanhViens.Where(j => j.ToChucId == acc.ToChucId);
+                return View(thanhViens.ToList());
+            }
+            else
+            {
+                return View("Error");
+            }
         }
         // GET: ThanhViens/Create
         public ActionResult Create()
         {
-            ViewBag.BanId = new SelectList(db.Bans.Where(j=>j.ToChucId == acc.ToChucId), "Id", "TenBan");
+            ViewBag.BanId = new SelectList(db.Bans.Where(j => j.ToChucId == acc.ToChucId), "Id", "TenBan");
             return View();
         }
 
@@ -36,7 +43,8 @@ namespace QuanLyCLB.Controllers
         public ActionResult Create([Bind(Include = "Id,HoTen,MSSV,SDT,NganhHoc,NgaySinh,ToChucId,BanId,ChucVu")] ThanhVien thanhVien)
         {
             if (ModelState.IsValid)
-            {   if(thanhVien.ChucVu == null)
+            {
+                if (thanhVien.ChucVu == null)
                 {
                     thanhVien.ChucVu = "Thành viên";
                 }
@@ -61,7 +69,7 @@ namespace QuanLyCLB.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BanId = new SelectList(db.Bans.Where(j=>j.ToChucId == acc.ToChucId), "Id", "TenBan", thanhVien.BanId);
+            ViewBag.BanId = new SelectList(db.Bans.Where(j => j.ToChucId == acc.ToChucId), "Id", "TenBan", thanhVien.BanId);
             return View(thanhVien);
         }
 
